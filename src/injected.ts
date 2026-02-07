@@ -5,6 +5,33 @@ let currentShortcuts: KeyboardShortcuts = { ...DEFAULT_SHORTCUTS }
 let currentRateIndex = PLAYBACK_RATES.indexOf(1)
 let isPlaying = false
 
+// Create or update speed overlay element
+function updateSpeedOverlay(rate: number): void {
+  let overlay = document.getElementById('gjun-speed-overlay')
+
+  if (!overlay) {
+    overlay = document.createElement('div')
+    overlay.id = 'gjun-speed-overlay'
+    overlay.style.cssText = `
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      z-index: 999999;
+      pointer-events: none;
+    `
+    document.body.appendChild(overlay)
+  }
+
+  overlay.textContent = `${rate}x`
+}
+
 function eventToShortcutKey(event: KeyboardEvent): string {
   const parts: string[] = []
   if (event.shiftKey) parts.push('Shift')
@@ -40,6 +67,7 @@ function changePlaybackRate(increase: boolean): void {
     const settingsDiv = document.querySelector(`#settings div[onclick*="mvRate(${newRate}"]`) as HTMLElement | null
     // @ts-expect-error - mvRate is defined in the page
     window.mvRate(newRate, settingsDiv)
+    updateSpeedOverlay(newRate)
     console.log(`[Gjun Player] Playback rate: ${newRate}x`)
   }
 }
