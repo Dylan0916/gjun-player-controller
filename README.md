@@ -20,7 +20,7 @@
 | **全螢幕切換** | `F` |
 
 ## 🛠️ 技術棧
-- **Bundler**: [Vite 6](https://vitejs.dev/) & [Bun](https://bun.sh/)
+- **Bundler**: [Vite 7](https://vitejs.dev/) & [Bun](https://bun.sh/)
 - **Framework**: [Vue 3](https://vuejs.org/)
 - **CSS**: [UnoCSS](https://unocss.dev/)
 - **Storage**: Chrome Storage Sync API
