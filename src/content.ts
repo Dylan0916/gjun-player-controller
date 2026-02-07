@@ -8,7 +8,7 @@ async function loadAndSendShortcuts(): Promise<void> {
   try {
     const result = await chrome.storage.sync.get('shortcuts')
     if (result.shortcuts) {
-      currentShortcuts = result.shortcuts
+      currentShortcuts = result.shortcuts as KeyboardShortcuts
     }
     // Send shortcuts to page script
     window.postMessage({ type: 'GJUN_PLAYER_UPDATE_SHORTCUTS', shortcuts: currentShortcuts }, '*')
@@ -20,7 +20,7 @@ async function loadAndSendShortcuts(): Promise<void> {
 // Listen for storage changes
 chrome.storage.onChanged.addListener(changes => {
   if (changes.shortcuts?.newValue) {
-    currentShortcuts = changes.shortcuts.newValue
+    currentShortcuts = changes.shortcuts.newValue as KeyboardShortcuts
     window.postMessage({ type: 'GJUN_PLAYER_UPDATE_SHORTCUTS', shortcuts: currentShortcuts }, '*')
   }
 })

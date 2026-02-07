@@ -19,7 +19,7 @@ onMounted(async () => {
   try {
     const result = await chrome.storage.sync.get('shortcuts')
     if (result.shortcuts) {
-      shortcuts.value = result.shortcuts
+      shortcuts.value = result.shortcuts as KeyboardShortcuts
     }
   } catch (error) {
     console.error('Failed to load shortcuts:', error)
