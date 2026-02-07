@@ -1,0 +1,24 @@
+{
+  "name": "gjun-player-controller",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build && bun run scripts/buildContent.ts",
+    "build:content": "bun run scripts/buildContent.ts",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/chrome": "^0.0.287",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.3",
+    "unocss": "^0.65.4",
+    "vite": "^6.1.0",
+    "vue-tsc": "^2.2.0"
+  }
+}
