@@ -41,9 +41,11 @@ function eventToShortcutKey(event: KeyboardEvent): string {
 
   if (event.key === ' ') {
     parts.push('Space')
-  } else if (event.key === '>') {
+  } else if (event.shiftKey && event.code === 'Period') {
+    // Shift + . = > (use event.code for IME compatibility)
     parts.push('>')
-  } else if (event.key === '<') {
+  } else if (event.shiftKey && event.code === 'Comma') {
+    // Shift + , = < (use event.code for IME compatibility)
     parts.push('<')
   } else if (event.code.startsWith('Key')) {
     parts.push(event.code)

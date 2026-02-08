@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue'
 import { DEFAULT_SHORTCUTS, type KeyboardShortcuts } from '../shared/config'
 
+const MODIFIER_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta'])
+
 const shortcuts = ref<KeyboardShortcuts>({ ...DEFAULT_SHORTCUTS })
 const activeField = ref<keyof KeyboardShortcuts | null>(null)
 const isSaved = ref(false)
@@ -36,7 +38,10 @@ function startEditing(field: keyof KeyboardShortcuts): void {
 }
 
 function handleKeydown(event: KeyboardEvent): void {
-  if (!activeField.value) return
+  // Ignore modifier-only key presses (wait for the actual key)
+  if (!activeField.value || MODIFIER_KEYS.has(event.key)) {
+    return
+  }
 
   event.preventDefault()
   event.stopPropagation()
@@ -49,9 +54,11 @@ function handleKeydown(event: KeyboardEvent): void {
 
   if (event.key === ' ') {
     parts.push('Space')
-  } else if (event.key === '>') {
+  } else if (event.shiftKey && event.code === 'Period') {
+    // Shift + . = > (use event.code for IME compatibility)
     parts.push('>')
-  } else if (event.key === '<') {
+  } else if (event.shiftKey && event.code === 'Comma') {
+    // Shift + , = < (use event.code for IME compatibility)
     parts.push('<')
   } else if (event.code.startsWith('Key')) {
     parts.push(event.code)
